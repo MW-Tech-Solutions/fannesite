@@ -1,0 +1,26 @@
+name: Extract ZIP File
+
+on:
+  push:
+    paths:
+      - 'Fannefiles.zip'  # Only trigger this action if the ZIP file is pushed
+
+jobs:
+  extract-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install unzip
+        run: sudo apt-get install unzip
+
+      - name: Extract ZIP file
+        run: unzip your-zip-file.zip -d extracted-folder
+
+      - name: Commit extracted files
+        run: |
+          git add extracted-folder/
+          git commit -m "Extracted contents of the ZIP file"
+          git push
